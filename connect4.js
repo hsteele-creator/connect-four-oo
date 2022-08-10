@@ -121,7 +121,7 @@ handleClick(evt) {
 }
 
 checkForWin() {
-  function _win(cells) {
+  const _win = (cells) => {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
@@ -178,7 +178,7 @@ function newGame() {
 }
 
 gameForm.addEventListener("submit", function(e) {
-    e.preventDefault();
+  e.preventDefault();
 })
 
 
