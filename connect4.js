@@ -5,7 +5,15 @@
  * board fills (tie)
  */
 
-
+ const button = document.querySelector(".new-game");
+ const gameForm = document.querySelector("#game-form");
+ const playerOneInput = document.querySelector("#player-one");
+ const playerTwoInput = document.querySelector("#player-two");
+const textInputs = document.querySelectorAll("input[type = text]");
+const labels = document.querySelectorAll(".label");
+// const pieceOne = document.querySelector(".piece.p1");
+// const pieceTwo = document.querySelector(".piece.p2");
+const body = document.querySelector("body");
 
   class Game {
     constructor(HEIGHT, WIDTH) {
@@ -13,6 +21,7 @@
       this.WIDTH = WIDTH;
       this.board = []; 
       this.currPlayer = 1; 
+      this.gameOver = false;
 
     this.makeBoard();
     this.makeHtmlBoard();
@@ -78,6 +87,7 @@
     
     endGame(msg) {
       alert(msg);
+      this.gameOver = true;
     }
 
     /** handleClick: handle click of column top to play piece */
@@ -98,12 +108,12 @@ handleClick(evt) {
   
   // check for win
   if (this.checkForWin()) {
-    return endGame(`Player ${this.currPlayer} won!`);
+    return this.endGame(`Player ${this.currPlayer} won!`);
   }
   
   // check for tie
   if (this.board.every(row => row.every(cell => cell))) {
-    return endGame('Tie!');
+    return this.endGame('Tie!');
   }
     
   // switch players
@@ -136,15 +146,44 @@ checkForWin() {
 
       // find winner (only checking each win-possibility as needed)
     
-      if (_win(this.horiz) || _win(this.vert) || _win(this.diagDR) || _win(this.diagDL)) {
+      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
     }
   }
 }
-
-
 }
+
+class Player {
+  constructor(color) {
+    this.color = color;
+  }
+}
+
+button.addEventListener("click", newGame);
+
+
+function newGame() {
+  // pieceOne.style.backgroundColor = playerOneInput.value;
+  // pieceTwo.style.backgroundColor = playerTwoInput.value;
+
+  new Game(7, 6);
+
+  for(let input of textInputs) {
+    input.classList.add("hidden");
+  }
+  for(let label of labels) {
+    label.classList.add("hidden");
+  } 
+}
+
+gameForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+})
+
+
+
+
 
 // const WIDTH = 7;
 // const HEIGHT = 6;
@@ -296,4 +335,3 @@ checkForWin() {
 // makeHtmlBoard();
 
 
-new Game(6, 7, 1);
